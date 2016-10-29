@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo">
+<head>
+    <meta charset="UTF-8">
+    <title>demo</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <link rel="stylesheet" href="../libs/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+
+<father>
+    <son>
+        <grandson></grandson>
+    </son>
+</father>
+
+
+
+<script src="../libs/angular/angular.js"></script>
+<script>
+    (function(){
+        angular.module("demo",[])
+                .directive("father",function(){
+                    return {
+                        restrict:"AE",
+                        template:"<div class='well' ng-transclude></div>",
+                        replace:false,
+                        transclude:true,
+                        //指令的内的controller,是用来
+                        //提供公有的方法给其它关联指令调用的
+                        controller:function($scope){
+                            this.test = function(){
+                                alert("from father controller");
+                            }
+                        },
+                        //指令内部的方法,外部是无法调用的
+                        link:function(scope,element,attr){
+
+                        }
+                    }
+                })
+                .directive("son",function(){
+                    return {
+                        //?^ 向上模糊查找
+                        require:"?^father", //require表示继承组件 "" , []
+                        restrict:"AE",
+                        template:"<div class='well' ng-transclude></div>",
+                        replace:false,
+                        transclude:true,
+                        link:function(scope,ele,attr,ctrl){
+                            //console.log(ctrl);
+                            ctrl.test();
+                        }
+                    }
+                })
+                .directive("grandson",function(){
+                    return {
+                        require:["?^son","?^father"], //继承了多个指令
+                        restrict:"AE",
+                        template:"<div class='well'>grandson</div>",
+                        link:function(scope,ele,attr,ctrl){ //ctrl-> []
+
+                            ctrl[1].test();
+                        }
+                    }
+                })
+    })()
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<div class="panel panel-{{hc}}" >
+    <div class="panel-heading">
+        <div class="panel-title">{{title}}</div>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-md-4 control-label">用户名:</label>
+                <div class="col-md-6">
+                    <input type="text" ng-model="userInfo.userName" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">密码:</label>
+                <div class="col-md-6">
+                    <input type="password" ng-model="userInfo.pass" class="form-control" placeholder="*****">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-6">
+                    <a class="btn btn-{{hc}} btn-lg" ng-click="login()">{{title}}</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

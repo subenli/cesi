@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo">
+<head>
+    <meta charset="UTF-8">
+    <title>demo</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <link rel="stylesheet" href="../libs/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+
+<div ng-controller="oneCtrl">
+    <one tl="{{title}}" cm="login()"></one>
+</div>
+
+
+<div ng-controller="twoCtrl">
+    <one tl="{{title}}" cm="login2()"></one>
+</div>
+
+<script src="../libs/angular/angular.js"></script>
+<script>
+    (function(){
+        angular.module("demo",[])
+                .directive("one",function(){
+                    return {
+                        scope:{
+                            tl:"@", //@绑定字符串
+                            cm:"&"  //&绑定的是方法
+
+                        },
+                        restrict:"AE",
+                        template:"<div class='well' ng-click='cm()'>" +
+                        "{{tl}}</div>",
+//                        link:function(scope,element,attr){
+//                            scope.tl = attr["tl"];
+//
+//                            console.log(attr["cm"]);
+//                        }
+                    }
+                })
+                .controller("oneCtrl",function($scope){
+                    $scope.title="one ctrl title";
+                    $scope.login = function(){
+                        alert("1 from one ");
+                    }
+                })
+                .controller("twoCtrl",function($scope){
+                    $scope.title="two ctrl title";
+                    $scope.login2 = function(){
+                        alert("2 from two");
+                    }
+                })
+    })()
+</script>
+</body>
+</html>
